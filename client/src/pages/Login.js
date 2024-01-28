@@ -19,15 +19,13 @@ function Login() {
           setUsername(event.target.value);
         }}
       />
-      <input type="password" />
-      <button
-        onClick={login}
+      <input
+        type="password"
         onChange={(event) => {
           setPassword(event.target.value);
         }}
-      >
-        Login
-      </button>
+      />
+      <button onClick={login}>Login</button>
     </div>
   );
 }
