@@ -73,7 +73,7 @@ function Post() {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
-                <label>Username: {comment.username}</label>
+                <label> Username: {comment.username}</label>
               </div>
             );
           })}
