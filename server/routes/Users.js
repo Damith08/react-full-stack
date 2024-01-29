@@ -8,13 +8,19 @@ const { sign } = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
-  bcrypt.hash(password, 10).then((hash) => {
-    Users.create({
-      username: username,
-      password: hash,
+  bcrypt
+    .hash(password, 10)
+    .then((hash) => {
+      Users.create({
+        username: username,
+        password: hash,
+      });
+      res.json("Success");
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json("Error creating user");
     });
-    res.json("Success");
-  });
 });
 
 router.post("/login", async (req, res) => {
@@ -24,16 +30,23 @@ router.post("/login", async (req, res) => {
 
   if (!user) res.json({ error: "User Doesn't Exist" });
 
-  bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: "Wrong Username And Password Combination" });
+  bcrypt
+    .compare(password, user.password)
+    .then((match) => {
+      if (!match)
+        res.json({ error: "Wrong Username And Password Combination" });
 
-    const accessToken = sign(
-      { username: user.username, id: user.id },
-      "importantsecret"
-    );
+      const accessToken = sign(
+        { username: user.username, id: user.id },
+        "importantsecret"
+      );
 
-    res.json(accessToken);
-  });
+      res.json(accessToken);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json("Error creating user");
+    });
 });
 
 router.get("/auth", validateToken, (req, res) => {

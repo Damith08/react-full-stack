@@ -7,9 +7,14 @@ export default function Home() {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/posts").then((res) => {
-      setListOfPosts(res.data);
-    });
+    axios
+      .get("http://localhost:3001/posts")
+      .then((res) => {
+        setListOfPosts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (

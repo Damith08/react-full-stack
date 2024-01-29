@@ -9,13 +9,23 @@ function Post() {
   const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/byId/${id}`).then((res) => {
-      setPostObject(res.data);
-    });
+    axios
+      .get(`http://localhost:3001/posts/byId/${id}`)
+      .then((res) => {
+        setPostObject(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    axios.get(`http://localhost:3001/comments/${id}`).then((res) => {
-      setComments(res.data);
-    });
+    axios
+      .get(`http://localhost:3001/comments/${id}`)
+      .then((res) => {
+        setComments(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   const addComment = () => {
@@ -43,6 +53,9 @@ function Post() {
           setComments([...comments, commentToAdd]);
           setNewComment("");
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 

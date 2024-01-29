@@ -19,9 +19,14 @@ export default function CreatePost() {
   });
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/posts", data).then((res) => {
-      navigate("/");
-    });
+    axios
+      .post("http://localhost:3001/posts", data)
+      .then((res) => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
