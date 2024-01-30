@@ -10,7 +10,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    status: false,
+  });
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
@@ -22,9 +26,16 @@ function App() {
         })
         .then((res) => {
           if (res.data.error) {
-            setAuthState(false);
+            setAuthState({
+              ...authState,
+              status: false,
+            });
           } else {
-            setAuthState(true);
+            setAuthState({
+              username: res.data.username,
+              id: res.data.id,
+              status: true,
+            });
           }
         });
     }
@@ -32,7 +43,11 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState(false);
+    setAuthState({
+      username: "",
+      id: 0,
+      status: false,
+    });
   };
 
   return (
@@ -42,7 +57,7 @@ function App() {
           <div className="navbar">
             <Link to="/">Home Page</Link>
             <Link to="/createpost">Create A Post</Link>
-            {!authState ? (
+            {!authState.status ? (
               <>
                 <Link to="/login">Login</Link>
                 <Link to="/registration">Registration</Link>
@@ -50,6 +65,8 @@ function App() {
             ) : (
               <button onClick={logout}>Logout</button>
             )}
+
+            <h1>{authState.username}</h1>
           </div>
           <Routes>
             <Route path="/" exact Component={Home} />
