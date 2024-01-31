@@ -25,7 +25,21 @@ export default function Home() {
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
       .then((res) => {
-        alert(res.data);
+        setListOfPosts(
+          listOfPosts.map((post) => {
+            if (post.id === postId) {
+              if (res.data.like) {
+                return { ...post, Likes: [...post.Likes, 0] };
+              } else {
+                const likesArray = post.Likes;
+                likesArray.pop();
+                return { ...post, Likes: likesArray };
+              }
+            } else {
+              return post;
+            }
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -55,6 +69,7 @@ export default function Home() {
               >
                 Like
               </button>
+              <label>{value.Likes.length}</label>
             </div>
           </div>
         );
