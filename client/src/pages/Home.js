@@ -5,13 +5,21 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 export default function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   let navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/posts")
+      .get("http://localhost:3001/posts", {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      })
       .then((res) => {
-        setListOfPosts(res.data);
+        setListOfPosts(res.data.listOfPosts);
+        setLikedPosts(
+          res.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -41,6 +49,16 @@ export default function Home() {
             }
           })
         );
+
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id !== postId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, postId]);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -68,13 +86,9 @@ export default function Home() {
                   onClick={() => {
                     likeAPost(value.id);
                   }}
-                  className="likeBttn"
-                />
-                <ThumbUpAltIcon
-                  onClick={() => {
-                    likeAPost(value.id);
-                  }}
-                  className="unlikeBttn"
+                  className={
+                    likedPosts.includes(value.id) ? "unlikeBttn" : "likeBttn"
+                  }
                 />
                 <label>{value.Likes.length}</label>
               </div>
