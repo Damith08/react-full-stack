@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 export default function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
@@ -61,15 +62,22 @@ export default function Home() {
               {value.postsText}
             </div>
             <div className="footer">
-              {value.username}
-              <button
-                onClick={() => {
-                  likeAPost(value.id);
-                }}
-              >
-                Like
-              </button>
-              <label>{value.Likes.length}</label>
+              <div className="username">{value.username}</div>
+              <div className="buttons">
+                <ThumbUpAltIcon
+                  onClick={() => {
+                    likeAPost(value.id);
+                  }}
+                  className="likeBttn"
+                />
+                <ThumbUpAltIcon
+                  onClick={() => {
+                    likeAPost(value.id);
+                  }}
+                  className="unlikeBttn"
+                />
+                <label>{value.Likes.length}</label>
+              </div>
             </div>
           </div>
         );
