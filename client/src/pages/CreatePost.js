@@ -1,12 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
 
 export default function CreatePost() {
-  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
   const initialValues = {
     title: "",
@@ -14,7 +12,7 @@ export default function CreatePost() {
   };
 
   useEffect(() => {
-    if (!authState.status) {
+    if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     }
   }, []);

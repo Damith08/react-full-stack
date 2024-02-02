@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import { AuthContext } from "../helpers/AuthContext";
 
 export default function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
   let navigate = useNavigate();
-  const { authState } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!authState.status) {
+    if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     } else {
       axios
