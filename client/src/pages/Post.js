@@ -84,7 +84,12 @@ function Post() {
         <div className="post" id="individual">
           <div className="title">{postObject.title}</div>
           <div className="body">{postObject.postsText}</div>
-          <div className="footer">{postObject.username}</div>
+          <div className="footer">
+            {postObject.username}{" "}
+            {authState.username === postObject.username && (
+              <button>Delete Post</button>
+            )}
+          </div>
         </div>
       </div>
       <div className="rightSide">
