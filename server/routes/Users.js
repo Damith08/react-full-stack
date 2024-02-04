@@ -6,6 +6,8 @@ const { validateToken } = require("../middleware/AuthMiddleware");
 
 const { sign } = require("jsonwebtoken");
 
+// user registration
+
 router.post("/", async (req, res) => {
   const { username, password } = req.body;
   bcrypt
@@ -15,14 +17,21 @@ router.post("/", async (req, res) => {
         username: username,
         password: hash,
       });
-      res.json("Success");
+      return res.status(201).json({
+        success: true,
+        message: "User Registered Successfully",
+      });
     })
     .catch((err) => {
-      console.error(err);
-      res.status(500).json("Error creating user");
+      return res.status(500).json({
+        success: false,
+        message: "Error creating user",
+        data: err,
+      });
     });
 });
 
+// user login
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -44,8 +53,11 @@ router.post("/login", async (req, res) => {
       res.json({ token: accessToken, username: username, id: user.id });
     })
     .catch((err) => {
-      console.error(err);
-      res.status(500).json("Error creating user");
+      res.status(500).json({
+        success: false,
+        message: "Error creating user",
+        data: err,
+      });
     });
 });
 
