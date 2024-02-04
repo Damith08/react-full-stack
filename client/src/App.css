@@ -281,3 +281,9 @@ button {
 .loginContainer input {
   border: 2px solid dodgerblue;
 }
+
+/* Profile */
+.basicInfo {
+  font-family: "Figtree", sans-serif;
+  color: hsl(210, 87%, 28%);
+}
