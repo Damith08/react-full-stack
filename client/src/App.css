@@ -19,7 +19,7 @@ body {
   flex-direction: column;
   margin-top: 50px;
   border: 1px solid lightgray;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Figtree", sans-serif;
 
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
@@ -57,6 +57,8 @@ body {
 
 .footer .username {
   flex: 50%;
+  text-decoration: none;
+  color: white;
 }
 .footer .buttons {
   flex: 50%;
@@ -80,7 +82,7 @@ body {
 /* CREATE POST PAGE CSS */
 
 .createPostPage {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Figtree", sans-serif;
   width: 100vw;
   height: 70vh;
   display: flex;
@@ -134,7 +136,7 @@ span {
   background-color: dodgerblue;
   display: flex;
   align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Figtree", sans-serif;
 }
 .navbar .links {
   flex: 50%;
@@ -225,6 +227,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Figtree", sans-serif;
 }
 
 .listOfComments .comment {

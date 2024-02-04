@@ -85,7 +85,9 @@ export default function Home() {
             </div>
             <div className="footer">
               <div className="username">
-                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+                <Link to={`/profile/${value.UserId}`} className="username">
+                  {value.username}
+                </Link>
               </div>
               <div className="buttons">
                 <ThumbUpAltIcon
