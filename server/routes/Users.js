@@ -75,4 +75,43 @@ router.get("/basicinfo/:id", async (req, res) => {
   res.json(basicInfo);
 });
 
+// update password
+router.put("/changepassword", validateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const user = await Users.findOne({ where: { username: req.user.username } });
+
+  bcrypt
+    .compare(oldPassword, user.password)
+    .then(async (match) => {
+      if (!match) res.json({ error: "Wrong Password Entered!" });
+
+      bcrypt
+        .hash(newPassword, 10)
+        .then((hash) => {
+          Users.update(
+            { password: hash },
+            { where: { username: req.user.username } }
+          );
+          return res.status(201).json({
+            success: true,
+            message: "User Registered Successfully",
+          });
+        })
+        .catch((err) => {
+          return res.status(500).json({
+            success: false,
+            message: "Error creating user",
+            data: err,
+          });
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Error creating user",
+        data: err,
+      });
+    });
+});
+
 module.exports = router;
